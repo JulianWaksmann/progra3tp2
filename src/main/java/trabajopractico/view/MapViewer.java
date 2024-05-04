@@ -6,13 +6,20 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import javax.swing.*;
 import java.awt.*;
 
-import trabajopractico.back.App;
+import trabajopractico.App;
 import trabajopractico.back.Grafo;
 import trabajopractico.back.Vertice;
+import trabajopractico.controller_mv.Controller;
+
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MapViewer {
     private JFrame frame;
     private JMapViewer mapViewer;
+    private Controller miController;
 
     public MapViewer() {
         frame = new JFrame("Mapa de Provincias de Argentina");
@@ -25,20 +32,23 @@ public class MapViewer {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void displayGraph(Grafo grafo) {
-        for (Vertice v : grafo.getVertices()) {
-            mapViewer.addMapMarker(new MapMarkerDot(v.getNombre(), new Coordinate(v.getLatitud(), v.getLongitud())));
-        }
+    public void drawLineBetweenVertices(Coordinate coord1, Coordinate coord2) {
+        List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(coord1, coord2, coord2));
+        MapPolygon polygon = new MapPolygonImpl(route);
+        mapViewer.addMapPolygon(polygon);
     }
 
-    public void show() {
+    public void drawVertice(String nombre, Coordinate coord) {
+        mapViewer.addMapMarker(new MapMarkerDot(nombre, coord));
+    }
+
+    public void showMap() {
+        // Este método hará que el frame sea visible, llamalo después de añadir todos los elementos necesarios al mapa
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        App graphManager = new App();  // Suponiendo 23 provincias en Argentina
-        MapViewer mapViewer = new MapViewer();
-        mapViewer.displayGraph(graphManager.getGrafo());
-        mapViewer.show();
+    public void setController(Controller miControlador) {
+        this.miController= miControlador;
     }
 }
+

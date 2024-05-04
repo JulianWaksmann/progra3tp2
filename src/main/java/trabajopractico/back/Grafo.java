@@ -1,7 +1,10 @@
 package trabajopractico.back;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+
+import trabajopractico.controller_mv.*;
 
 public class Grafo {
-    
+    private Controller miController;
     private int[][] adjMatriz;
     private int cantVertices;
     private Vertice[] vertices;
@@ -25,11 +28,19 @@ public class Grafo {
     public void addVertice(Vertice verticeAgregado, int indice){
         //Se debe pasar un indice dentro del rango de [0, cantVertices)
         vertices[indice]= verticeAgregado;
+
+        //informamos al controller
+        miController.addVertice(verticeAgregado.getNombre(), verticeAgregado.getCoordinate());
     }
 
     public void agregarArista(int primerVertice, int segundoVertice, int peso){
         adjMatriz[primerVertice][segundoVertice] = peso; 
         adjMatriz[segundoVertice][primerVertice] = peso; //esto si solo si el grafo no es dirigido.
+
+        //informamos al controller
+        Coordinate coord1= vertices[primerVertice].getCoordinate();
+        Coordinate coord2= vertices[segundoVertice].getCoordinate();
+        miController.conectarProvincias(coord1, coord2);
     }
 
     // Método para imprimir la matriz de adyacencia
@@ -48,6 +59,10 @@ public class Grafo {
         }
     }
 
+    public int getCantidadVertices(){
+        return adjMatriz.length;
+    }
+
     public Vertice[] getVertices() {
         return vertices;
     }
@@ -55,20 +70,43 @@ public class Grafo {
     public int[][] getAdjMatriz() {
         return adjMatriz;
     }
+
+    public void setController(Controller miControlador) {
+        this.miController= miControlador;
+    }
+    
     //public static void main(String[] args) {
-    //    int cantProvincias= 2;
-    //    Grafo argentina= new Grafo(cantProvincias);
-
-    //    //--------------Genero los vertices de las provincias--------------
-    //    Vertice verticeBuenosAires= new Vertice("Buenos Aires", -34.6037, -58.3816);
-    //    Vertice verticeCordoba= new Vertice("Cordoba", -31.4201, -64.1888);
-
-    //    //----------------Incluyo los vertices al grafo--------------------
-    //    argentina.addVertice(verticeBuenosAires, 0);    //indice 0 --> Buenos Aires
-    //    argentina.addVertice(verticeCordoba, 1);        //indice 1 --> Cordoba
-    //    
+    //    int cantProvincias = 3;
+    //    Grafo argentina = new Grafo(cantProvincias);
+    //
+    //    Vertice verticeBuenosAires = new Vertice("Buenos Aires", -34.6037, -58.3816);
+    //    Vertice verticeCordoba = new Vertice("Cordoba", -31.4201, -64.1888);
+    //    Vertice verticeSantaFe = new Vertice("Santa Fe", -30.7069, -60.9498);
+    //
+    //    argentina.addVertice(verticeBuenosAires, 0);
+    //    argentina.addVertice(verticeCordoba, 1);
+    //    argentina.addVertice(verticeSantaFe, 2);
+    //
     //    argentina.agregarArista(0, 1, 200);
-    //    
+    //    argentina.agregarArista(1, 2, 150);
+    //    argentina.agregarArista(0, 2, 250);
+    //
     //    argentina.printGrafo();
+    //    
+    //    //System.out.println(argentina.getCantidadVertices());
+//
+    //    //for(Vertice vert : argentina.getVertices()){
+    //    //    System.out.println(vert.getNombre());
+    //    //}
+    //    
+    //    Prim prim = new Prim(argentina);
+    //    int[] mst = prim.calcularMST();
+    //
+    //    System.out.println("Arista \tPeso");
+    //    for (int i = 1; i < argentina.getCantidadVertices(); i++) {
+    //        if (argentina.getAdjMatriz()[i][mst[i]] != Integer.MAX_VALUE) {
+    //            System.out.println(mst[i] + " - " + i + "\t" + argentina.getAdjMatriz()[i][mst[i]]);
+    //        }
+    //    }
     //}
 }

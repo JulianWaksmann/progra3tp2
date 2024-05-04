@@ -1,5 +1,7 @@
 package trabajopractico.back;
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+
 public class Vertice {
     String nombre;
     double latitud;
@@ -29,11 +31,9 @@ public class Vertice {
         return this.nombre;
     }
 
-    public double getLatitud(){
-        return this.latitud;
-    }
+    public Coordinate getCoordinate(){
+        Coordinate c= new Coordinate(this.latitud, this.longitud);
 
-    public double getLongitud(){
-        return this.longitud;
+        return c;
     }
 }
