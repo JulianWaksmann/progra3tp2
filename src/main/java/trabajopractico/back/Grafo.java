@@ -1,5 +1,6 @@
 package trabajopractico.back;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
 import trabajopractico.controller_mv.*;
 
@@ -33,14 +34,28 @@ public class Grafo {
         miController.addVertice(verticeAgregado.getNombre(), verticeAgregado.getCoordinate());
     }
 
-    public void agregarArista(int primerVertice, int segundoVertice, int peso){
+    public MapPolygon agregarArista(int primerVertice, int segundoVertice, int peso){
         adjMatriz[primerVertice][segundoVertice] = peso; 
         adjMatriz[segundoVertice][primerVertice] = peso; //esto si solo si el grafo no es dirigido.
 
         //informamos al controller
         Coordinate coord1= vertices[primerVertice].getCoordinate();
         Coordinate coord2= vertices[segundoVertice].getCoordinate();
-        miController.conectarProvincias(coord1, coord2);
+        
+        return miController.conectarProvincias(coord1, coord2);
+    }
+
+    public void eliminarArista(MapPolygon polygon, int primerVertice, int segundoVertice){
+        adjMatriz[primerVertice][segundoVertice] = Integer.MAX_VALUE; 
+        adjMatriz[segundoVertice][primerVertice] = Integer.MAX_VALUE; //esto si solo si el grafo no es dirigido.
+
+        miController.eliminarArista(polygon);
+    }
+
+    //aplicamos prim al grafo
+    public void aplicarPrim(){
+        miController.eliminarTotalidadAristas();
+        Prim.calcularMST(this);
     }
 
     // Método para imprimir la matriz de adyacencia

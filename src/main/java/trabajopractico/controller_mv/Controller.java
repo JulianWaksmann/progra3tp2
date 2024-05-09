@@ -1,6 +1,7 @@
 package trabajopractico.controller_mv;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
 import trabajopractico.back.Grafo;
 import trabajopractico.back.Vertice;
@@ -17,10 +18,17 @@ public class Controller {
         mapa.drawVertice(nombre, coord);
     }
 
-    public void conectarProvincias(Coordinate coord1, Coordinate coord2) {
-        mapa.drawLineBetweenVertices(coord1, coord2);   //dibujamos la linea
+    public MapPolygon conectarProvincias(Coordinate coord1, Coordinate coord2) {
+        return mapa.drawLineBetweenVertices(coord1, coord2);   //dibujamos la linea 
     }
 
+    public void eliminarArista(MapPolygon polygon){
+        mapa.removeLine(polygon);
+    }
+
+    public void eliminarTotalidadAristas(){
+        mapa.removeAllPolygons();
+    }
 
     //------------------Funciones set para obtener los objetos controlados---------------------------
     

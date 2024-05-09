@@ -1,7 +1,9 @@
 package trabajopractico;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
+import java.util.Scanner;
 import trabajopractico.back.Grafo;
 import trabajopractico.back.Vertice;
 import trabajopractico.view.MapViewer;
@@ -68,6 +70,7 @@ public class App {
 
         //----------------genero las aristas--------------------
         // Buenos Aires
+        grafo.agregarArista(0, 1, 10);  // Buenos Aires a capital
         grafo.agregarArista(0, 3, 25);  // Buenos Aires a Santa Fe
         grafo.agregarArista(0, 2, 45);  // Buenos Aires a Córdoba
         grafo.agregarArista(0, 19, 30); // Buenos Aires a La Pampa
@@ -135,6 +138,8 @@ public class App {
 
         //otros
         grafo.agregarArista(23, 11, 70);
+        grafo.agregarArista(5, 20, 35);
+        grafo.agregarArista(5, 7, 33);
 
     }
 
@@ -152,10 +157,8 @@ public class App {
         mapa.setController(miControlador);
 
         inicializarProvincias(grafo);
-        
-        Coordinate one = new Coordinate(-36.6769, -60.5588);
-        Coordinate two = new Coordinate(-34.6037, -58.3816);
-        mapa.drawLineBetweenVertices(one, two);
+        grafo.aplicarPrim();
+        //mapa.removeAllPolygons();
 
         mapa.showMap();
     }

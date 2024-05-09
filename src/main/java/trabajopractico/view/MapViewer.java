@@ -32,14 +32,27 @@ public class MapViewer {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void drawLineBetweenVertices(Coordinate coord1, Coordinate coord2) {
+    public MapPolygon drawLineBetweenVertices(Coordinate coord1, Coordinate coord2) {
         List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(coord1, coord2, coord2));
         MapPolygon polygon = new MapPolygonImpl(route);
         mapViewer.addMapPolygon(polygon);
+
+        return polygon;
+    }
+
+    public void removeLine(MapPolygon polygon) {
+        mapViewer.removeMapPolygon(polygon);
+        mapViewer.repaint();  // Actualiza el mapa
     }
 
     public void drawVertice(String nombre, Coordinate coord) {
         mapViewer.addMapMarker(new MapMarkerDot(nombre, coord));
+    }
+
+    // Método para remover todos los polígonos
+    public void removeAllPolygons() {
+        mapViewer.removeAllMapPolygons();
+        mapViewer.repaint();  // Refrescar el mapa después de remover los elementos
     }
 
     public void showMap() {

@@ -3,52 +3,57 @@ package trabajopractico.back;
 import java.util.Arrays;
 
 public class Prim {
-    private Grafo grafo;
 
-    public Prim(Grafo grafo) {
-        this.grafo = grafo;
-    }
-
-    public int[] calcularMST() {
+    public static void calcularMST(Grafo grafo) {
         int numVertices = grafo.getCantidadVertices();
-        int[] parent = new int[numVertices];  // Almacena el árbol generador mínimo
-        int[] key = new int[numVertices];     // Almacena los pesos mínimos de corte de todos los vértices
-        boolean[] mstSet = new boolean[numVertices]; // Rastrea los vértices no incluidos en el MST
+        int[] parent = new int[numVertices];
+        int[] key = new int[numVertices];
+        boolean[] mstSet = new boolean[numVertices];
 
         Arrays.fill(key, Integer.MAX_VALUE);
         Arrays.fill(parent, -1);
-
-        key[0] = 0; // Hace la clave 0 para que este vértice sea elegido primero
+        key[0] = 0;
 
         for (int count = 0; count < numVertices - 1; count++) {
-            imprimirEstados(key, parent, mstSet);
-
-            int u = minKey(key, mstSet);
+            int u = minKey(key, mstSet, grafo);
+            if (u == -1) {
+                // Manejar el error o romper el bucle si todos los vértices están incluidos
+                System.out.println("No se encontró un vértice válido para continuar el MST.");
+                break;
+            }
             mstSet[u] = true;
-            System.out.println("Vértice seleccionado: " + u + " con costo mínimo: " + key[u]);
-
-            imprimirEstados(key, parent, mstSet);
 
             for (int v = 0; v < numVertices; v++) {
-                // grafo.getAdjMatriz() accede a la matriz de adyacencia de la clase Grafo
-                if (grafo.getAdjMatriz()[u][v] != 0 && grafo.getAdjMatriz()[u][v] != Integer.MAX_VALUE && !mstSet[v] && grafo.getAdjMatriz()[u][v] < key[v]) {
+                if (grafo.getAdjMatriz()[u][v] != 0 && !mstSet[v] && grafo.getAdjMatriz()[u][v] < key[v]) {
                     parent[v] = u;
                     key[v] = grafo.getAdjMatriz()[u][v];
-                    
-                    System.out.println("  Actualizando vértice: " + v + " con nuevo costo: " + key[v] + " conectado a través de: " + u);
-                    imprimirEstados(key, parent, mstSet);
                 }
             }
         }
 
-        imprimirEstados(key, parent, mstSet);
-        return parent;
+        // Reiniciar la matriz de adyacencia para el MST (opcional, depende si quieres limpiar las conexiones no MST)
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                grafo.getAdjMatriz()[i][j] = 0;  // Borrar la matriz existente si es necesario
+            }
+        }
+
+        // Utilizar agregarArista para reconstruir el MST
+        for (int i = 1; i < numVertices; i++) {
+            int u = parent[i];
+            int v = i;
+            if (u != -1) {  // Solo intentar agregar arista si existe un padre válido
+                int peso = grafo.getAdjMatriz()[u][v];
+                grafo.agregarArista(u, v, peso);  // Usar agregarArista garantiza la creación de MapPolygon
+            } else {
+                System.out.println("No hay padre para el vértice " + i + ", por lo que no se agrega arista.");
+            }
+        }
     }
 
-    private int minKey(int[] key, boolean[] mstSet) {
+    private static int minKey(int[] key, boolean[] mstSet, Grafo grafo) {
         int min = Integer.MAX_VALUE;
         int minIndex = -1;
-
         for (int v = 0; v < grafo.getCantidadVertices(); v++) {
             if (!mstSet[v] && key[v] < min) {
                 min = key[v];
@@ -56,11 +61,5 @@ public class Prim {
             }
         }
         return minIndex;
-    }
-
-    private void imprimirEstados(int[] key, int[] parent, boolean[] mstSet) {
-        System.out.println("Estado actual de key[]: " + Arrays.toString(key));
-        System.out.println("Estado actual de parent[]: " + Arrays.toString(parent));
-        System.out.println("Estado actual de mstSet[]: " + Arrays.toString(mstSet));
     }
 }
