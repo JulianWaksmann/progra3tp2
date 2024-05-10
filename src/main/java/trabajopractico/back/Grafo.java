@@ -44,7 +44,9 @@ public class Grafo {
     public Arista agregarArista(int primerVertice, int segundoVertice, int peso){
         adjMatriz[primerVertice][segundoVertice] = peso; 
         adjMatriz[segundoVertice][primerVertice] = peso; //esto si solo si el grafo no es dirigido.
-
+        
+        System.out.println("se agrega arista: "+ primerVertice +"-"+ segundoVertice + "con peso: " + peso);
+        
         //informamos al controller
         Coordinate coord1= vertices[primerVertice].getCoordinate();
         Coordinate coord2= vertices[segundoVertice].getCoordinate();
@@ -54,6 +56,7 @@ public class Grafo {
         
         //generamos nueva arista y la agregamos a la lista
         Arista nuevaArista= new Arista(primerVertice, segundoVertice, polygon);
+        aristas.add(nuevaArista); // Agregar la arista a la lista
 
         return nuevaArista;
     }
@@ -76,7 +79,7 @@ public class Grafo {
         Prim.calcularMST(this);
     }
 
-    // Método para imprimir la matriz de adyacencia
+    // Metodo para imprimir la matriz de adyacencia
     public void printGrafo() {
         System.out.println("Matriz de Adyacencia:");
 
@@ -88,7 +91,7 @@ public class Grafo {
                     System.out.print(adjMatriz[t][m] + " ");
                 }
             }
-            System.out.println();  // Nueva línea al final de cada fila de la matriz
+            System.out.println();  // Nueva linea al final de cada fila de la matriz
         }
     }
 
@@ -99,14 +102,14 @@ public class Grafo {
             return;
         }
     
-        // Aseguramos que las aristas estén actualizadas con los pesos actuales de la matriz de adyacencia
+        // Aseguramos que las aristas esten actualizadas con los pesos actuales de la matriz de adyacencia
         aristas.sort((a1, a2) -> {
             int pesoA1 = adjMatriz[a1.getOrigen()][a1.getDestino()];
             int pesoA2 = adjMatriz[a2.getOrigen()][a2.getDestino()];
             return Integer.compare(pesoA2, pesoA1);  // Orden descendente
         });
     
-        // Eliminar las k-1 aristas más pesadas
+        // Eliminar las k-1 aristas mas pesadas
         int limite = Math.min(k - 1, aristas.size());
         for (int i = 0; i < limite; i++) {
             Arista aristaAEliminar = aristas.get(i);
@@ -124,6 +127,22 @@ public class Grafo {
 
     public int[][] getAdjMatriz() {
         return adjMatriz;
+    }
+    
+    public int getNumeroDeAristas() {
+        return aristas.size();  // Retorna el numero de aristas en la lista
+    }
+
+    public void imprimirPesosAristas() {
+        System.out.println("Pesos de las aristas en el grafo:");
+        for (Arista arista : aristas) {
+            int origen = arista.getOrigen();
+            int destino = arista.getDestino();
+            int peso = adjMatriz[origen][destino];  // Obtener el peso desde la matriz de adyacencia
+    
+            // Imprimir informacion de la arista
+            System.out.println("Arista de " + origen + " a " + destino + " tiene un peso de: " + peso);
+        }
     }
 
     public void setController(Controller miControlador) {

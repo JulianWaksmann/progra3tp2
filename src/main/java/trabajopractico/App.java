@@ -18,7 +18,7 @@ public class App {
     public static void inicializarProvincias(Grafo grafo) {
         //--------------Genero los vertices de las provincias--------------
         Vertice verticeBuenosAires = new Vertice("Buenos Aires", -36.6769, -60.5588);
-        Vertice verticeCapitalFederal = new Vertice("Ciudad Autónoma de Buenos Aires", -34.6037, -58.3816);
+        Vertice verticeCapitalFederal = new Vertice("Ciudad Autonoma de Buenos Aires", -34.6037, -58.3816);
         Vertice verticeCordoba = new Vertice("Cordoba", -32.1429, -63.8017);
         Vertice verticeSantaFe = new Vertice("Santa Fe", -30.7069, -60.9498);
         Vertice verticeMendoza = new Vertice("Mendoza", -34.6299, -68.334);
@@ -42,46 +42,46 @@ public class App {
         Vertice verticeChubut = new Vertice("Chubut", -43.7886, -68.5268);
         Vertice verticeTierraDelFuego = new Vertice("Tierra del Fuego", -54.8019, -67.6987);
 
-        //----------------Incluyo los vertices al grafo--------------------
-        grafo.addVertice(verticeBuenosAires, 0);       //indice 0 --> Buenos Aires
-        grafo.addVertice(verticeCapitalFederal, 1);    //indice 1 --> Capital federal
-        grafo.addVertice(verticeCordoba, 2);           //indice 2 --> Cordoba
-        grafo.addVertice(verticeSantaFe,3);
-        grafo.addVertice(verticeMendoza,4);
-        grafo.addVertice(verticeTucuman,5);
-        grafo.addVertice(verticeEntreRios,6);
-        grafo.addVertice(verticeSalta,7);
-        grafo.addVertice(verticeMisiones,8);
-        grafo.addVertice(verticeChaco,9);
-        grafo.addVertice(verticeCorrientes,10);
-        grafo.addVertice(verticeSantaCruz,11);
-        grafo.addVertice(verticeNeuquen,12);
-        grafo.addVertice(verticeRioNegro,13);
-        grafo.addVertice(verticeSanJuan,14);
-        grafo.addVertice(verticeJujuy,15);
-        grafo.addVertice(verticeSanLuis,16);
-        grafo.addVertice(verticeLaRioja,17);
-        grafo.addVertice(verticeCatamarca,18);
-        grafo.addVertice(verticeLaPampa,19);
-        grafo.addVertice(verticeSantiagoDelEstero,20);
-        grafo.addVertice(verticeFormosa,21);
-        grafo.addVertice(verticeChubut,22);
-        grafo.addVertice(verticeTierraDelFuego,23);
+        //---------------Incluyo los vertices al grafo--------------------
+        grafo.addVertice(verticeBuenosAires, 0);       // indice 0 --> Buenos Aires
+        grafo.addVertice(verticeCapitalFederal, 1);    // indice 1 --> Capital Federal
+        grafo.addVertice(verticeCordoba, 2);           // indice 2 --> Cordoba
+        grafo.addVertice(verticeSantaFe,3);            // indice 3 --> Santa Fe
+        grafo.addVertice(verticeMendoza,4);            // indice 4 --> Mendoza
+        grafo.addVertice(verticeTucuman,5);            // indice 5 --> Tucuman
+        grafo.addVertice(verticeEntreRios,6);          // indice 6 --> Entre Rios
+        grafo.addVertice(verticeSalta,7);              // indice 7 --> Salta
+        grafo.addVertice(verticeMisiones,8);           // indice 8 --> Misiones
+        grafo.addVertice(verticeChaco,9);              // indice 9 --> Chaco
+        grafo.addVertice(verticeCorrientes,10);        // indice 10 --> Corrientes
+        grafo.addVertice(verticeSantaCruz,11);         // indice 11 --> Santa Cruz
+        grafo.addVertice(verticeNeuquen,12);           // indice 12 --> Neuquen
+        grafo.addVertice(verticeRioNegro,13);          // indice 13 --> Rio Negro
+        grafo.addVertice(verticeSanJuan,14);           // indice 14 --> San Juan
+        grafo.addVertice(verticeJujuy,15);             // indice 15 --> Jujuy
+        grafo.addVertice(verticeSanLuis,16);           // indice 16 --> San Luis
+        grafo.addVertice(verticeLaRioja,17);           // indice 17 --> La Rioja
+        grafo.addVertice(verticeCatamarca,18);         // indice 18 --> Catamarca
+        grafo.addVertice(verticeLaPampa,19);           // indice 19 --> La Pampa
+        grafo.addVertice(verticeSantiagoDelEstero,20); // indice 20 --> Santiago del Estero
+        grafo.addVertice(verticeFormosa,21);           // indice 21 --> Formosa
+        grafo.addVertice(verticeChubut,22);            // indice 22 --> Chubut
+        grafo.addVertice(verticeTierraDelFuego,23);    // indice 23 --> Tierra del Fuego
 
         //----------------genero las aristas--------------------
         // Buenos Aires
         grafo.agregarArista(0, 1, 10);  // Buenos Aires a capital
         grafo.agregarArista(0, 3, 25);  // Buenos Aires a Santa Fe
-        grafo.agregarArista(0, 2, 45);  // Buenos Aires a Córdoba
+        grafo.agregarArista(0, 2, 45);  // Buenos Aires a Cordoba
         grafo.agregarArista(0, 19, 30); // Buenos Aires a La Pampa
-        grafo.agregarArista(0, 13, 60); // Buenos Aires a Río Negro
-        grafo.agregarArista(0, 6, 20);  // Buenos Aires a Entre Ríos
+        grafo.agregarArista(0, 13, 60); // Buenos Aires a Rio Negro
+        grafo.agregarArista(0, 6, 20);  // Buenos Aires a Entre Rios
 
         // Catamarca
         grafo.agregarArista(18, 7, 55);  // Catamarca a Salta
-        grafo.agregarArista(18, 5, 25);  // Catamarca a Tucumán
+        grafo.agregarArista(18, 5, 25);  // Catamarca a Tucuman
         grafo.agregarArista(18, 20, 40); // Catamarca a Santiago del Estero
-        grafo.agregarArista(18, 2, 50);  // Catamarca a Córdoba
+        grafo.agregarArista(18, 2, 50);  // Catamarca a Cordoba
         grafo.agregarArista(18, 17, 45); // Catamarca a La Rioja
 
         // Chaco
@@ -91,25 +91,25 @@ public class App {
         grafo.agregarArista(9, 10, 20);  // Chaco a Corrientes
 
         // Chubut
-        grafo.agregarArista(22, 13, 70); // Chubut a Río Negro
-        grafo.agregarArista(22, 11, 75); // Chubut a Santa Cruz
+        grafo.agregarArista(22, 13, 33); // Chubut a Rio Negro
+        grafo.agregarArista(22, 11, 35); // Chubut a Santa Cruz
         
         grafo.agregarArista(13, 4, 80);  // Rio Negro a Mendoza
 
-        // Córdoba
-        grafo.agregarArista(2, 16, 40);  // Córdoba a San Luis
-        grafo.agregarArista(2, 17, 45);  // Córdoba a La Rioja
-        grafo.agregarArista(2, 20, 50);  // Córdoba a Santiago del Estero
+        // Cordoba
+        grafo.agregarArista(2, 16, 40);  // Cordoba a San Luis
+        grafo.agregarArista(2, 17, 45);  // Cordoba a La Rioja
+        grafo.agregarArista(2, 20, 50);  // Cordoba a Santiago del Estero
 
         // Corrientes
-        grafo.agregarArista(10, 6, 15);  // Corrientes a Entre Ríos
+        grafo.agregarArista(10, 6, 15);  // Corrientes a Entre Rios
         grafo.agregarArista(10, 3, 25);  // Corrientes a Santa Fe
         grafo.agregarArista(10, 21, 30); // Corrientes a Formosa
-        grafo.agregarArista(10, 8, 35);  // Corrientes a Misiones
+        grafo.agregarArista(10, 8, 32);  // Corrientes a Misiones
 
-        // Entre Ríos
-        grafo.agregarArista(6, 10, 20);  // Entre Ríos a Corrientes
-        grafo.agregarArista(6, 3, 25);   // Entre Ríos a Santa Fe
+        // Entre Rios
+        grafo.agregarArista(6, 10, 20);  // Entre Rios a Corrientes
+        grafo.agregarArista(6, 3, 25);   // Entre Rios a Santa Fe
 
         // Formosa
         grafo.agregarArista(21, 7, 45);  // Formosa a Salta
@@ -120,26 +120,26 @@ public class App {
         // La Pampa
         grafo.agregarArista(19, 4, 50);  // La Pampa a Mendoza
         grafo.agregarArista(19, 16, 40); // La Pampa a San Luis
-        grafo.agregarArista(19, 13, 55); // La Pampa a Río Negro
+        grafo.agregarArista(19, 13, 55); // La Pampa a Rio Negro
 
-        //Neuquen
-        grafo.agregarArista(12, 13, 30);
-        grafo.agregarArista(12, 19, 30);
-        grafo.agregarArista(12, 4, 30);
+        // Neuquen
+        grafo.agregarArista(12, 13, 30); // Neuquen a Rio Negro con un peso de 30
+        grafo.agregarArista(12, 19, 45); // Neuquen a La Pampa con un peso de 30
+        grafo.agregarArista(12, 4, 43);  // Neuquen a Mendoza con un peso de 30
 
-        //Santa Fe
-        grafo.agregarArista(3, 2, 40);
-        grafo.agregarArista(3, 20, 40);
+        // Santa Fe
+        grafo.agregarArista(3, 2, 30);  // Santa Fe a Cordoba con un peso de 40
+        grafo.agregarArista(3, 20, 40); // Santa Fe a Santiago del Estero con un peso de 40
 
-        //San Juan
-        grafo.agregarArista(14, 4,31);
-        grafo.agregarArista(14, 16,33);
-        grafo.agregarArista(14, 17,32);
+        // San Juan
+        grafo.agregarArista(14, 4, 31);  // San Juan a Mendoza con un peso de 31
+        grafo.agregarArista(14, 16, 33); // San Juan a San Luis con un peso de 33
+        grafo.agregarArista(14, 17, 32); // San Juan a La Rioja con un peso de 32
 
-        //otros
-        grafo.agregarArista(23, 11, 70);
-        grafo.agregarArista(5, 20, 35);
-        grafo.agregarArista(5, 7, 33);
+        // Otros
+        grafo.agregarArista(23, 11, 35); // Tierra del Fuego a Santa Cruz con un peso de 70
+        grafo.agregarArista(5, 20, 35);  // Tucuman a Santiago del Estero con un peso de 35
+        grafo.agregarArista(5, 7, 33);   // Tucuman a Salta con un peso de 33
 
     }
 
@@ -157,9 +157,15 @@ public class App {
         mapa.setController(miControlador);
 
         inicializarProvincias(grafo);
+
         grafo.aplicarPrim();
         //mapa.removeAllPolygons();
+        //grafo.imprimirPesosAristas();
 
+        grafo.eliminarAristasPesadas(3);
+
+        //System.out.println("luego de eliminar aristas pesadas");
+        //grafo.imprimirPesosAristas();
         mapa.showMap();
     }
 }
