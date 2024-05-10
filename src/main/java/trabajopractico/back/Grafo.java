@@ -1,4 +1,8 @@
 package trabajopractico.back;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
@@ -9,10 +13,13 @@ public class Grafo {
     private int[][] adjMatriz;
     private int cantVertices;
     private Vertice[] vertices;
+    private List<Arista> aristas;
 
     public Grafo(int cantVertices){
-        vertices= new Vertice[cantVertices];
-        adjMatriz= new int[cantVertices][cantVertices];
+        this.vertices= new Vertice[cantVertices];
+        this.adjMatriz= new int[cantVertices][cantVertices];
+        this.cantVertices=cantVertices;
+        this.aristas = new ArrayList<>();
 
         // Inicializar la matriz con valores infinitos, excepto la diagonal, los infinitos luego los iremos modificando
         for (int i = 0; i < cantVertices; i++) {
@@ -34,7 +41,7 @@ public class Grafo {
         miController.addVertice(verticeAgregado.getNombre(), verticeAgregado.getCoordinate());
     }
 
-    public MapPolygon agregarArista(int primerVertice, int segundoVertice, int peso){
+    public Arista agregarArista(int primerVertice, int segundoVertice, int peso){
         adjMatriz[primerVertice][segundoVertice] = peso; 
         adjMatriz[segundoVertice][primerVertice] = peso; //esto si solo si el grafo no es dirigido.
 
@@ -42,19 +49,30 @@ public class Grafo {
         Coordinate coord1= vertices[primerVertice].getCoordinate();
         Coordinate coord2= vertices[segundoVertice].getCoordinate();
         
-        return miController.conectarProvincias(coord1, coord2);
+        //el controlador nos retorna el poligono, que si bien es algo visual lo necesitamos
+        MapPolygon polygon= miController.conectarProvincias(coord1, coord2);
+        
+        //generamos nueva arista y la agregamos a la lista
+        Arista nuevaArista= new Arista(primerVertice, segundoVertice, polygon);
+
+        return nuevaArista;
     }
 
-    public void eliminarArista(MapPolygon polygon, int primerVertice, int segundoVertice){
-        adjMatriz[primerVertice][segundoVertice] = Integer.MAX_VALUE; 
-        adjMatriz[segundoVertice][primerVertice] = Integer.MAX_VALUE; //esto si solo si el grafo no es dirigido.
+    public void eliminarArista(Arista arista){
+        //eliminamos la arista de nuestra lista de aristas
+        aristas.remove(arista);
 
-        miController.eliminarArista(polygon);
+        //eliminamos los pesos contenidos en la matriz
+        adjMatriz[arista.getOrigen()][arista.getDestino()] = Integer.MAX_VALUE; 
+        adjMatriz[arista.getDestino()][arista.getOrigen()] = Integer.MAX_VALUE; //esto si solo si el grafo no es dirigido.
+
+        miController.eliminarArista(arista.getPolygon());
     }
 
     //aplicamos prim al grafo
     public void aplicarPrim(){
         miController.eliminarTotalidadAristas();
+        aristas.clear();
         Prim.calcularMST(this);
     }
 
@@ -71,6 +89,28 @@ public class Grafo {
                 }
             }
             System.out.println();  // Nueva línea al final de cada fila de la matriz
+        }
+    }
+
+    //metodo para eliminar las k-1 aristas mas pesadas
+    public void eliminarAristasPesadas(int k) {
+        if (k <= 1) {
+            System.out.println("No se pueden eliminar menos de una arista.");
+            return;
+        }
+    
+        // Aseguramos que las aristas estén actualizadas con los pesos actuales de la matriz de adyacencia
+        aristas.sort((a1, a2) -> {
+            int pesoA1 = adjMatriz[a1.getOrigen()][a1.getDestino()];
+            int pesoA2 = adjMatriz[a2.getOrigen()][a2.getDestino()];
+            return Integer.compare(pesoA2, pesoA1);  // Orden descendente
+        });
+    
+        // Eliminar las k-1 aristas más pesadas
+        int limite = Math.min(k - 1, aristas.size());
+        for (int i = 0; i < limite; i++) {
+            Arista aristaAEliminar = aristas.get(i);
+            eliminarArista(aristaAEliminar);
         }
     }
 
